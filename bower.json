@@ -1,10 +1,10 @@
 {
-  "name": "bootstrapuPortal",
-  "version": "0.0.0",
+  "name": "Bootstrap-uPortal",
+  "version": "0.1.0",
   "authors": [
-    "mbelmok01"
+    "Mohamed Belmokhtar & Germain Souquet"
   ],
-  "license": "MIT",
+  "license": "BSD",
   "dependencies": {
     "bootstrap": "~3.0.3"
   }
