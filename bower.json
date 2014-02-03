@@ -1,0 +1,11 @@
+{
+  "name": "bootstrapuPortal",
+  "version": "0.0.0",
+  "authors": [
+    "mbelmok01"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.0.3"
+  }
+}
