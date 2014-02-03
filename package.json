@@ -10,10 +10,8 @@
   "author": "",
   "license": "BSD",
   "devDependencies": {
-    "grunt": "~0.4.2",
     "cssom": "~0.3.0",
     "load-grunt-tasks": "~0.3.0",
-    "bower": "~1.2.8",
     "grunt-bower-task": "~0.3.4"
   }
 }
