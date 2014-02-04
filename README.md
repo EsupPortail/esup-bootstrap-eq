@@ -27,4 +27,4 @@ You can check the dist folder, Bootstrap have been customized.
 
 
 
-[Click here to see a customized version](https://gist.github.com/mbelmok01/7a9992642c1c9dc88456)
+[Click here to see a customized version](https://gist.github.com/mbelmok01/8803499)
