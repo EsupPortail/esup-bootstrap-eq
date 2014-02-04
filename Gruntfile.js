@@ -1,43 +1,60 @@
-require('load-grunt-tasks');
-
-//var bower = require('grunt-bower-task');
-//var custom = require('custom');
 module.exports = function(grunt) {
-    // Project configuration
+
+	'use strict';
+
+	/* Load Tasks */
+
+	var Customizer = require('./modules/Customizer');
+
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-cssbeautifier');
+
+	/* Tasks Configuration */ 
+
     grunt.initConfig({
-    	pkg: grunt.file.readJSON('package.json'),
-    	bower: {
-    		install: {
-    			options: {
-    				targetDir: './libs',
-    				layout: 'byType',
-	 				install: true,
-	 				verbose: false,
-	 				cleanTargetDir: false,
-	 				cleanBowerDir: false,
-	 				bowerOptions: {}
-	 			}
+
+	 	customize : {},
+	 	
+	 	copy : {
+	 		main : {
+	 			files : [
+	 				{
+	 					expand: true,
+	 					flatten : true,
+	 					src : ['lib/bootstrap/dist/fonts/*'],
+	 					dest : 'dist/bootstrap/fonts'
+	 				},
+	 				{
+	 					expand: true,
+	 					flatten : true,
+	 					src : ['lib/bootstrap/dist/js/*'],
+	 					dest : 'dist/bootstrap/js'
+	 				}
+	 			]
 	 		}
 	 	},
-
-	 	custom: {
-	 		bootstrap: {
-	 			// src: [
-	 			// '/app/components/bootstrap/dist/css/bootstrap.css',
-	 			// ],
-	 			// dest: '/dist/css/customBootstrap.css'
-	 		}
+	 	
+	 	cssmin : {
+	 	  combine : {
+	 	  	files : {
+	 	  		'dist/bootstrap/css/bootstrap.min.css' : ['dist/bootstrap/css/bootstrap.css']
+	 	  	}
+	 	  }
 	 	},
+	 	
+	 	cssbeautifier : {
+		  files : ["dist/bootstrap/css/bootstrap.css"]
+		}
+	
+	});
 
+    /* Tasks */ 
 
+	grunt.registerTask('customize', 'customize bootstrap for a portal context', function() {
+		var plainTextCustomBootstrap = Customizer.parseBootstrap(grunt.file.read('lib/bootstrap/dist/css/bootstrap.css', { encoding : 'utf8' }));
+		grunt.file.write('dist/bootstrap/css/bootstrap.css', plainTextCustomBootstrap);
+	});
 
-	 });
-
-    // Load bower task plugin
-    grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('custom');
-
-    // The default task - install the bower dependencies
-    grunt.registerTask('default', ['bower:install', 'custom:bootstrap']);
-    
+    grunt.registerTask('default', ['copy', 'customize', 'cssmin', 'cssbeautifier']);
 }

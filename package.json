@@ -1,17 +1,31 @@
 {
-  "name": "bootstrapuPortal",
-  "version": "0.0.0",
-  "description": "ERROR: No README.md file found!",
-  "main": "index.js",
+  "name": "Bootstrap-uPortal",
+  "version": "0.1.0",
+  "description": "Customization of the Twitter Bootstrap framework to fit the need of responsive portlet development in uPortal",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "cssom": "~0.3.0"
+  },
+  "devDependencies": {
+    "cssom": "~0.3.0",
+    "grunt": "~0.4.2",
+    "bower": "~1.2.8",
+    "grunt-bower-task": "~0.3.4",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-cssbeautifier": "~0.1.1",
+    "grunt-contrib-cssmin": "~0.7.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
-  "author": "",
-  "license": "BSD",
-  "devDependencies": {
-    "cssom": "~0.3.0",
-    "load-grunt-tasks": "~0.3.0",
-    "grunt-bower-task": "~0.3.4"
-  }
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mbelmok01/bootstrap-uPortal.git"
+  },
+  "author": "Mohamed Belmokhtar & Germain Souquet",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/mbelmok01/bootstrap-uPortal/issues"
+  },
+  "homepage": "https://github.com/mbelmok01/bootstrap-uPortal"
 }

@@ -1,0 +1,9 @@
+{
+<<<<<<< HEAD
+  "directory": "./lib",
+  "json": "bower.json"
+}
+=======
+  "directory" : "./lib"
+}
+>>>>>>> da54e74389f1a807d7ecb1fd1f45bed3520d504d
