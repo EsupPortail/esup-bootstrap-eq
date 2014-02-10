@@ -1,26 +1,30 @@
 # Bootstrap for uPortal
 
-In order to use this bootstrap customizer for uPortal you will need [NodeJS](http://nodejs.org/) and some of its plugins [Grunt](http://gruntjs.com/) and [Bower](http://bower.io/)
+## Tools you will need
 
++ [NodeJS](http://nodejs.org/)
++ [Grunt](http://gruntjs.com/)
++ [Bower](http://bower.io/)
 
-After installing Node and set it in the path just run : 
+## How to
 
-```
-npm install -g grunt bower
-```
-
-Then you will need all the depencies, launch this in the project directory
+After cloning this repo you will need to download all the project dependencies, simply run : 
 
 ```
 npm install
+bower install
 ```
 
-It will download all the depencies and modules for this project. 
+## GruntJS tasks
 
-And to finish 
+`default` this is currently the only task, it will copy bootstrap file into the dist folder and start the customization process, after that it will beautify the CSS output in bootstrap.css file and minify the CSS output in bootstrap.min.css
 
+In order to do this, type this at the root of your project :
 ```
 grunt
 ```
+And now just check the `dist/` folder
 
-You can check the dist folder, Bootstrap have been customized.
+## Example
+
+Here is a [sample version](https://gist.github.com/mbelmok01/8803499) of our customized bootstrap
