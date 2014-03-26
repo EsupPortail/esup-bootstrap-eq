@@ -33,22 +33,26 @@ After, if you want to use these classes, you have to add this snippet into you j
 
 ```
 <script type="text/javascript">
- 
+    
     var $portletContainers;
  
 $(document).ready(function() {
+
+    // all portlets must have the CSS class .portlet-container
+    
     $portletContainers = $(".portlet-container");
+    
     // Resize event isn't fired on DOM Content Loaded, we launch the function manually
     onWindowResize();
   $(window).resize(onWindowResize);
 });
  
 function onWindowResize() {
+    
     $portletContainers.each(function(index) {
         
         var $that = $(this);
         var portletWidth = $that.width()
-        
         $that.removeClass("xs sm md lg");
         
         if(portletWidth < 768)
