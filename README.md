@@ -43,9 +43,9 @@ This snippet will assign the right CSS class to the portlet container.
  
 $(document).ready(function() {
 
-    // all portlets must have the CSS class .portlet-container
+    // all portlets must have the CSS class .pc
     
-    $portletContainers = $(".portlet-container");
+    $portletContainers = $(".pc");
     
     // Resize event isn't fired on DOM Content Loaded, we launch the function manually
     onWindowResize();
