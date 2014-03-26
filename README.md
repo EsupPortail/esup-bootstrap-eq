@@ -29,7 +29,12 @@ And now just check the `dist/` folder
 
 Here is a [sample version](https://gist.github.com/mbelmok01/8803499) of our customized bootstrap
 
-After, if you want to use these classes, you have to add this snippet into you javascript.
+## How to use
+
+
+After generating the custom Twitter Bootstrap, you will have to execute a little JavaScript snippet into your portlet.
+This snippet will assign the right CSS class to the portlet container.
+
 
 ```
 <script type="text/javascript">
