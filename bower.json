@@ -6,6 +6,6 @@
   ],
   "license": "BSD",
   "dependencies": {
-    "bootstrap": "~3.0.3"
+    "bootstrap": "latest"
   }
 }
