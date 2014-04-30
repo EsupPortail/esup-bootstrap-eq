@@ -56,5 +56,5 @@ module.exports = function(grunt) {
 		grunt.file.write('dist/bootstrap/css/bootstrap.css', plainTextCustomBootstrap);
 	});
 
-    grunt.registerTask('default', ['copy', 'customize', 'cssmin', 'cssbeautifier']);
+    grunt.registerTask('build', ['copy', 'customize', 'cssmin', 'cssbeautifier']);
 }

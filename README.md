@@ -21,7 +21,7 @@ bower install
 
 In order to do this, type this at the root of your project :
 ```
-grunt
+grunt build
 ```
 And now just check the `dist/` folder
 
