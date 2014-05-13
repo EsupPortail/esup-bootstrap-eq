@@ -1,31 +1,10 @@
 # Bootstrap for uPortal
 
-## Tools you will need
+To use this project you will need : [NodeJS](http://nodejs.org/), [GruntJS](http://gruntjs.com/), [Bower](http://bower.io/)
 
-+ [NodeJS](http://nodejs.org/)
-+ [Grunt](http://gruntjs.com/)
-+ [Bower](http://bower.io/)
+## Generate a custom Twitter Bootstrap version
 
-## How to
-
-After cloning this repo you will need to download all the project dependencies, simply run : 
-
-```
-npm install
-bower install
-```
-
-## GruntJS tasks
-
-`default` this is currently the only task, it will copy bootstrap file into the dist folder and start the customization process, after that it will beautify the CSS output in bootstrap.css file and minify the CSS output in bootstrap.min.css
-
-In order to do this, type this at the root of your project :
-```
-grunt build
-```
-And now just check the `dist/` folder
-
-## Example
+We've automate the all process, Grunt will do it for you, just run `grunt build` at the root of this project and then simply take the files from the `dist/` folder
 
 Here is a [sample version](https://gist.github.com/mbelmok01/8803499) of our customized bootstrap
 
