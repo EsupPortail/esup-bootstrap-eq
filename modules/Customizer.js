@@ -1,121 +1,103 @@
 var CSSOM = require('cssom');
 
-var Customizer = {};
+var Customizer = {
 
-// variables prefix
-Customizer.CONTAINER_CLASS = ".pc",
-Customizer.XS_CLASS        = ".xs",
-Customizer.SM_CLASS        = ".sm",
-Customizer.MD_CLASS        = ".md",
-Customizer.LG_CLASS        = ".lg";
+	// Constants definition
+	CONTAINER_CLASS : '.pc',
+	XS_CLASS : '.xs',
+	SM_CLASS : '.sm',
+	MD_CLASS : '.md',
+	LG_CLASS : '.lg',
 
-// @Return : Boolean
-// return if an object is a style rule
-Customizer.isStyleRule = function isStyleRule(obj) {
-	return obj.selectorText != undefined;
-}
+	// Utils
+	isStyleRule : function(rule) {
+		return rule.hasOwnProperty('selectorText');
+	},
+	isMediaQuery : function(mq) {
+		return mq.hasOwnProperty('media') && mq.media[0] !='print';
+	},
+	arrayUnset : function(arr, val) {
+		var index = arr.indexOf(val);
+		return index > -1 ? arr.splice(index,1) : arr;
+	},
+	/**
+	 * [determinePrefix : Choose correct prefix to append base on the media query rule]
+	 * 
+	 * @param  {Object} MediaQuery object extracted from the CSS Object Model. 
+	 * @return {Array}  Returns an array containing all CSS class to prepend to the CSS selectors.
+	 */
+	determinePrefix : function(mediaQuery) {
+		var prefixes = {
+			'480' : [Customizer.XS_CLASS],
+			'767' : [Customizer.XS_CLASS],
+			'768' : [Customizer.SM_CLASS, Customizer.MD_CLASS, Customizer.LG_CLASS],
+			'768,991' : [Customizer.SM_CLASS],
+			'992,1199' : [Customizer.MD_CLASS],
+			'992' : [Customizer.MD_CLASS, Customizer.LG_CLASS],
+			'1200' : [Customizer.LG_CLASS]
+		};
 
-// @Return : Boolean
-// return if an object is a media rule
-Customizer.isMediaRule = function isMediaRule(obj) {
-	return obj.media != undefined && obj.media[0] !='print';
-}
-
-// @Return : String
-// return an array of selectors prefixed
-Customizer.updateSelectors = function updateSelectors(CSSRule, prefix) {
-	var selectorArray = CSSRule.selectorText.split(",");
-	
-	// for each selector
-	for(var i=0; i<selectorArray.length; i++){
+		return prefixes[mediaQuery.match(/[0-9]+/g).join(',')].map(function(el) {
+			return Customizer.CONTAINER_CLASS + el;
+		});
+	},
+	/**
+	 * [updateSelectors]
+	 * 
+	 * @param  {Object} CSSRule object extracted from the CSS Object Model
+	 * @param  {Array}  Prefixes to prepend to the CSS selector
+	 * @return {String} A stringified CSS selector with the correct CSS class added
+	 */
+	updateSelectors : function(CSSRule, prefixes) {
+		var selectors = CSSRule.selectorText.split(',');
 		
-		// selector at index i
-		var selector = selectorArray[i];
-	
-		var updatedSelectors="";
-		
-		for(var j=0; j<prefix.length; j++) {
-			
-			updatedSelectors += prefix[j]+" "+selector.trim(); 
-			//  The last one mustn't have a coma
-			updatedSelectors += ((j!=prefix.length-1) ? "," : "").trim();
-		}
-		// update selector
-		selectorArray[i]= updatedSelectors.toString();
-	}
-	return selectorArray.toString();
-}
+		return selectors.map(function(selector) {
+			return prefixes.map(function(prefix) {
+				return prefix + ' ' + selector.trim();
+			}).join(',');
+		}).join(',');
+	},
+	/**
+	 * [flattenMediaQuery description]
+	 * 
+	 * @param  {Object} mq      MediaQuery object extracted from the CSS Object Model
+	 * @param  {Number} indexMQ current index from the parent loop
+	 * @param  {Array}  arr     Array containing all CSS and Media Query rules
+	 * @return {Number}         Length of the MediaQuery css rules
+	 */
+	flattenMediaQuery : function(mq, indexMQ, arr) {
+		var prefixes = Customizer.determinePrefix(mq.media[0]),
+			mqRules = mq.cssRules;
 
-/* @Return : String */
-/* Will loop over all the CSS, and custom it */
-Customizer.parseBootstrap = function parseBootstrap(plainTextData) {
-	/* Create an array representing the CSS Object Model */
-	var bootstrapStylesheet = CSSOM.parse(plainTextData),
-		bootstrapRules = bootstrapStylesheet.cssRules;
+		mqRules.forEach(function(cssRule, k, array) {
 
-	// Loop all over the array
-	for(var i=0, bootstrapCSSRule; bootstrapCSSRule = bootstrapRules[i]; i++) {
+			cssRule.selectorText = Customizer.updateSelectors(cssRule, prefixes);
+			arr.splice(k+indexMQ, 0, cssRule);
+		});
+		return mq.cssRules.length - 1;
+	},
+	/**
+	 * [parseBootstrap : Will parse the bootstrap and update it]
+	 * 
+	 * @param  {[type]} Stringified representation of Twitter Bootstrap framework
+	 * @return {String} Stringified representation of the updated Twitter Bootstrap framework
+	 */
+	parseBootstrap : function(plainTextBootstrap) {
 
-		if(this.isStyleRule(bootstrapCSSRule)) {
-			bootstrapCSSRule.selectorText = this.updateSelectors(bootstrapCSSRule, [this.CONTAINER_CLASS]);
-		}
+		var bs = CSSOM.parse(plainTextBootstrap),
+			rules = bs.cssRules;	
 
-		// If the current rule is a media query, then we go here
-		if(this.isMediaRule(bootstrapCSSRule)) {
-			
-			// an array wich contains prefixes
-			var prefix = [];
-			
-			switch(bootstrapCSSRule.media[0]) {
-				case "(max-width: 767px)": // XS
-					prefix.push(this.XS_CLASS);
-					break;
-				case "(min-width: 768px)" : // SM, MD, LG
-				case "screen and (min-width: 768px)" : // SM, MD, LG
-					prefix.push(this.CONTAINER_CLASS+this.SM_CLASS, this.CONTAINER_CLASS+this.MD_CLASS, this.CONTAINER_CLASS+this.LG_CLASS);
-					break;
-				case "(min-width: 768px) and (max-width: 991px)" : // SM
-					prefix.push(this.CONTAINER_CLASS+this.SM_CLASS);
-					break;	
-				case "(min-width: 992px)" : // MD, LG
-					prefix.push(this.CONTAINER_CLASS+this.MD_CLASS, this.CONTAINER_CLASS+this.LG_CLASS);
-					break;
-				case "(min-width: 992px) and (max-width: 1199px)" : // MD
-					prefix.push(this.CONTAINER_CLASS+this.MD_CLASS);
-					break;
-				case "(min-width: 1200px)" : // LG
-					prefix.push(this.CONTAINER_CLASS+this.LG_CLASS);
-					break;
+		for(var i = 0, rule; rule = rules[i]; i++) {
+			if(Customizer.isStyleRule(rule)) {
+				rule.selectorText = Customizer.updateSelectors(rule, [Customizer.CONTAINER_CLASS]);
 			}
-
-			// loop over all rules of the current media query
-			for(var k=0, cssRule; cssRule = bootstrapCSSRule.cssRules[k]; k++) {
-
-				cssRule.selectorText = this.updateSelectors(cssRule, prefix);
-				
-				// if we don't increment i by k, the cssRules will be desc.
-				bootstrapRules.splice(i+k, 0, cssRule);
+			if(Customizer.isMediaQuery(rule)) {
+				i += Customizer.flattenMediaQuery(rule, i, rules);
+				Customizer.arrayUnset(rules, rule);
 			}
-			// remove the media query
-			bootstrapRules.unset(bootstrapCSSRule);
-
-			// increment i to not prefix a second time selectors inherited from the media
-			i += bootstrapCSSRule.cssRules.length - 1;
 		}
-
+		return bs.toString();
 	}
+};
 
-	return bootstrapStylesheet.toString();
-}
-
-// Extends Array Class
-// Unset an element by it's value
-Array.prototype.unset = function(val) {
-	var index = this.indexOf(val);
-	if(index > -1) {
-		this.splice(index,1)
-	}
-}
-
-// Export this object as a Node Module
 module.exports = Customizer;
