@@ -1,18 +1,33 @@
-# Bootstrap for uPortal
+# Esup Bootstrap EQ (Element Queries)
 
-To use this project you will need : [NodeJS](http://nodejs.org/), [GruntJS](http://gruntjs.com/), [Bower](http://bower.io/)
+Media queries are great ! But it also shows some limitations... 
+We decided to create a Twitter Bootstrap version that behave nicely if you need to adapt the style based on a block size in your page.
+
+If you are not aware of what Element queries are you should read these two articles :
+* [Element queries](http://www.xanthir.com/b4PR0)
+* [2014 State of Element Queries](http://www.xanthir.com/b4VG0)
+
+The project is buildt on top of :
+* [GruntJS](http://gruntjs.com/)
+* [Bower](http://bower.io/)
+
+If you don't have these tools you can install them by running on your command line prompt
+
+```
+npm install -g grunt grunt-cli bower
+```
 
 ## Generate a custom Twitter Bootstrap version
 
-We've automate the all process, Grunt will do it for you, just run `grunt build` at the root of this project and then simply take the files from the `dist/` folder
+The process has been automate using GruntJS. Simply run grunt build task and check out the `dist` repository
 
-Here is a [sample version](https://gist.github.com/mbelmok01/8803499) of our customized bootstrap
+Here is a [sample version](https://gist.github.com/mbelmok01/8803499) of this customized version.
 
-## How to use
+## How to
 
 _Be careful_
-Double importation of Twitter Bootstrap JavaScript on the same page will break. 
-In order to prevent this issue to happen you should import Twitter Bootstrap JavaScript this way
+
+If you import Twitter Bootstrap JavaScript file twice in the same page it will break. To prevent this behavior you should import the JavaScript library this way:
 
 ```html
 <script type="text/javascript">
@@ -20,9 +35,9 @@ In order to prevent this issue to happen you should import Twitter Bootstrap Jav
 </script>
 ```
 
-After generating the custom Twitter Bootstrap, you will have to execute a little JavaScript snippet into your portlet.
-This snippet will assign the right CSS class to the portlet container.
+This bootstrap fork relies wants to emulate element query behavior. You won't have to change your markup, only add some CSS class to a block that refers to a `widget` container and an extra JavaScript snippet to make it dynamic.
 
+Here is a sample of what you need to include in your page.  
 
 ```html
 <script type="text/javascript">

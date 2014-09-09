@@ -1,7 +1,7 @@
 {
-  "name": "Bootstrap-uPortal",
-  "version": "0.1.0",
-  "description": "Customization of the Twitter Bootstrap framework to fit the need of responsive portlet development in uPortal",
+  "name": "esup-bootstrap-eq",
+  "version": "1.0.0",
+  "description": "Esup Bootstrap EQ (Element Query) is a customized Twitter Bootstrap version that brings element query like features",
   "main": "Gruntfile.js",
   "dependencies": {
     "cssom": "~0.3.0"
@@ -20,12 +20,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mbelmok01/bootstrap-uPortal.git"
+    "url": "https://github.com/gsouquet/esup-bootstrap-eq.git"
   },
-  "author": "Mohamed Belmokhtar & Germain Souquet",
-  "license": "BSD-2-Clause",
+  "author": "Germain Souquet & Mohamed Belmokhtar",
+  "licenses" : [{
+    "type": "Apache",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }],
   "bugs": {
-    "url": "https://github.com/mbelmok01/bootstrap-uPortal/issues"
+    "url": "https://github.com/gsouquet/esup-bootstrap-eq/issues"
   },
-  "homepage": "https://github.com/mbelmok01/bootstrap-uPortal"
+  "homepage": "https://github.com/gsouquet/esup-bootstrap-eq/"
 }

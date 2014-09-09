@@ -1,10 +1,13 @@
 {
-  "name": "Bootstrap-uPortal",
-  "version": "0.1.0",
+  "name": "esup-bootstrap-eq",
+  "version": "1.0.0",
   "authors": [
-    "Mohamed Belmokhtar & Germain Souquet"
+    "Germain Souquet & Mohamed Belmokhtar"
   ],
-  "license": "BSD",
+  "licenses" : [{
+    "type": "Apache",
+    "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }],
   "dependencies": {
     "bootstrap": "latest"
   }
