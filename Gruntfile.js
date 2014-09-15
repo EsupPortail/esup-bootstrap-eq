@@ -75,4 +75,5 @@ module.exports = function(grunt) {
 	});
 
     grunt.registerTask('build', ['copy', 'customize', 'cssmin', 'cssbeautifier']);
+    grunt.registerTask('default', ['build']);
 }
