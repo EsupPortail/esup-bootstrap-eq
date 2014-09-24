@@ -70,8 +70,12 @@ var Customizer = {
 		var selectors = CSSRule.selectorText.split(',');
 		
 		return selectors.map(function(selector) {
+			var m = selector.match(/(^| )(body|html)($|\W.*)/i);
 			return prefixes.map(function(prefix) {
-				return prefix + ' ' + selector.trim();
+ 				if (m) 
+ 					return m[1] + prefix + m[3];
+ 				else
+					return prefix + ' ' + selector.trim();
 			}).join(',');
 		}).join(',');
 	},
